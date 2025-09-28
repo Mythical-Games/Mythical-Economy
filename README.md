@@ -46,17 +46,13 @@ Unlike many economy plugins that rely on player usernames, Mythical-Economy stor
 
 ---
 
-## Configuration Highlights
+## API Highlights
 
 ```yaml
-database-type: SQLITE # or MONGODB
-
-# For MongoDB:
-mongo-uri: "mongodb://username:password@host:port"
-mongo-database-name: "yourDatabaseName"
-
-# Customize messages:
-player-not-found: "Player PLAYER was not found."
-self-balance-output: "Your current balance is BALANCE."
-player-balance-output: "Player PLAYER has BALANCE coins."
-set-money-output: "Set PLAYER's balance to AMOUNT."
+public double getBalance(String playerUUID) {}
+public void addBalance(String playerUUID, double amount) {}
+public boolean subtractBalance(String playerUUID, double amount) {}
+public void setBalance(String playerUUID, double amount) {}
+public String getUUIDByUsername(String username) {}
+public boolean hasAccount(String playerUUID) {}
+```
