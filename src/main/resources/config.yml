@@ -18,10 +18,27 @@ default-balance: 1000
 # Translations - Customize all the messages to your liking
 # PLAYER - Displays the player name (PLACEHOLDER)
 # BALANCE - Displays the player balance (PLACEHOLDER)
-new-player-notify: "§l§7[§bEconomyAPI§7] §rWelcome to the server §ePLAYER! You have been granted §eBALANCE$§r as a starting bonus!"
-self-balance-output: "§l§7[§bEconomyAPI§7] §rYou have §eBALANCE$§r available!"
-player-not-found: "§l§7[§bEconomyAPI§7] §r§cMentioned player not found!"
-player-balance-output: "§l§7[§bEconomyAPI§7] §r§ePLAYER§r have §eBALANCE$§r available!"
-add-money-output: "§l§7[§bEconomyAPI§7] Successfully added §eAMOUNT$§r to §r§ePLAYER's§r balance!"
-reduce-money-output: "§l§7[§bEconomyAPI§7] Successfully removed §eAMOUNT$§r from §r§ePLAYER's§r balance!"
-set-money-output: "§l§7[§bEconomyAPI§7] §r§ePLAYER's§r balance has been updated to §eBALANCE!"
+# AMOUNT - APPLIES FOR CERTAIN COMMANDS
+
+# ERROR MESSAGES
+error-player-only: "§l§7[§dMythical-Economy§7] §r§cThis command can only be run by a player or OP."
+error-invalid-amount: "§l§7[§dMythical-Economy§7] §r§cPlease provide a valid number ( 1 - 9999999999)..."
+error-config: "§l§7[§dMythical-Economy§7] §r§cA Configuration issue was detected! Please report to a server admin."
+error-internal: "§l§7[§dMythical-Economy§7] §r§cAn internal error occurred while updating the balance."
+error-pay-failure-1: "§l§7[§dMythical-Economy§7] §r§cYou cannot send money to yourself"
+error-pay-failure-2: "§l§7[§dMythical-Economy§7] §r§cYou dont have enough money in your balance to make this transfer"
+error-account-creation: "§l§7[§dMythical-Economy§7] §r§cFailed to create your Economy account. Please contact a server admin"
+
+# USAGE MESSAGES
+usage-add-money: "§l§7[§dMythical-Economy§7] §r§cUsage: /addmoney <player> <amount>"
+usage-pay-money: "§l§7[§dMythical-Economy§7] §r§cUsage: /pay <player> <amount>"
+usage-reduce-money: "§l§7[§dMythical-Economy§7] §r§cUsage: /reducemoney <player> <amount>"
+usage-set-money: "§l§7[§dMythical-Economy§7] §r§cUsage: /setmoney <player> <amount>"
+
+new-player-notify: "§l§7[§dMythical-Economy§7] §rWelcome to the server §ePLAYER!§r You have been granted §eBALANCE$§r as a starting bonus!"
+self-balance-output: "§l§7[§dMythical-Economy§7] §rYou have §eBALANCE$§r available!"
+player-not-found: "§l§7[§dMythical-Economy§7] §r§cMentioned player not found!"
+player-balance-output: "§l§7[§dMythical-Economy§7] §r§ePLAYER§r have §eBALANCE$§r available!"
+add-money-output: "§l§7[§dMythical-Economy§7] Successfully added §eAMOUNT$§r to §r§ePLAYER's§r balance!"
+reduce-money-output: "§l§7[§dMythical-Economy§7] Successfully removed §eAMOUNT$§r from §r§ePLAYER's§r balance!"
+set-money-output: "§l§7[§dMythical-Economy§7] §r§ePLAYER's§r balance has been updated to §eBALANCE!"

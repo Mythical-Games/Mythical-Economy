@@ -3,9 +3,11 @@ package com.mythicalgames.economy;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 
+import com.mythicalgames.economy.api.EconomyAPIManager;
 import com.mythicalgames.economy.commands.AddMoneyCommand;
 import com.mythicalgames.economy.commands.BalanceCommand;
 import com.mythicalgames.economy.commands.EconomyInfoCommand;
+import com.mythicalgames.economy.commands.PayCommand;
 import com.mythicalgames.economy.commands.ReduceMoneyCommand;
 import com.mythicalgames.economy.commands.SetMoneyCommand;
 import com.mythicalgames.economy.database.DatabaseHandler;
@@ -34,6 +36,7 @@ public class EconomyAPI extends PluginBase {
         if (enableAscii) displayASCII();
         try {
             initializeDatabase();
+            EconomyAPIManager.initialize(database);
             registerCommandsAndEvents();
             getLogger().info("Mythical-Economy has been enabled!");
         } catch (Exception e) {
@@ -73,11 +76,13 @@ public class EconomyAPI extends PluginBase {
     private void registerCommandsAndEvents() {
          getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
-         getServer().getCommandMap().register("mythicasuchwcjocwleconomy", new SetMoneyCommand(this));
-         getServer().getCommandMap().register("mythicasuchwcjocwleconomy", new AddMoneyCommand(this));
-         getServer().getCommandMap().register("mythicasuchwcjocwleconomy", new ReduceMoneyCommand(this));
-         getServer().getCommandMap().register("mythicasuchwcjocwleconomy", new BalanceCommand(this));
-         getServer().getCommandMap().register("mythicasuchwcjocwleconomy", new EconomyInfoCommand());
+         getServer().getCommandMap().register("mythicaleconomy", new SetMoneyCommand(this));
+         getServer().getCommandMap().register("mythicaleconomy", new AddMoneyCommand(this));
+         getServer().getCommandMap().register("mythicaleconomy", new ReduceMoneyCommand(this));
+         getServer().getCommandMap().register("mythicaleconomy", new BalanceCommand(this));
+         getServer().getCommandMap().register("mythicaleconomy", new EconomyInfoCommand());
+         getServer().getCommandMap().register("mythicaleconomy", new PayCommand(this));
+
     }
 
     public void displayASCII() {
@@ -92,56 +97,9 @@ public class EconomyAPI extends PluginBase {
     public static EconomyAPI getInstance() {
         return instance;
     }
-
-    public DatabaseHandler getDatabase() {
-        return database;
+    
+    public static EconomyAPIManager getAPI() {
+        return EconomyAPIManager.getAPI();
     }
 
-    // ====== Public API ======
-
-    /**
-     * Get player balance using UUID (recommended).
-     */
-    public double getPlayerBalanceByUUID(String playerUUID) {
-        return database.getBalance(playerUUID);
-    }
-
-    /**
-     * Get player balance using username.
-     * Returns 0 if user not found or method not supported by DB.
-     */
-    public double getPlayerBalance(String playerUsername) {
-        try {
-            String uuid = database.getUUIDByUsername(playerUsername);
-            if (uuid == null) {
-                return 0;
-            }
-            return database.getBalance(uuid);
-        } catch (UnsupportedOperationException e) {
-            getLogger().warning("Database does not support username-based lookup.");
-            return 0;
-        }
-    }
-
-    /**
-     * Add balance to a player (UUID-based).
-     */
-    public void addPlayerBalance(String playerUUID, double amount) {
-        database.addBalance(playerUUID, amount);
-    }
-
-    /**
-     * Subtract balance from a player (UUID-based).
-     * Returns true if successful, false if insufficient balance.
-     */
-    public boolean subtractPlayerBalance(String playerUUID, double amount) {
-        return database.subtractBalance(playerUUID, amount);
-    }
-
-    /**
-     * Set a player's balance directly (UUID-based).
-     */
-    public void setPlayerBalance(String playerUUID, double amount) {
-        database.setBalance(playerUUID, amount);
-    }
 }

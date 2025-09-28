@@ -3,7 +3,6 @@ package com.mythicalgames.economy.commands;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import com.mythicalgames.economy.EconomyAPI;
-import com.mythicalgames.economy.database.DatabaseHandler;
 
 public class ReduceMoneyCommand extends Command {
 
@@ -18,12 +17,12 @@ public class ReduceMoneyCommand extends Command {
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!sender.isPlayer() && !sender.isOp()) {
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cThis command can only be run by a player or OP.");
+            sender.sendMessage(plugin.getConfig().getString("error-player-only"));
             return false;
         }
 
         if (args.length < 2) {
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cUsage: /reducemoney <player> <amount>");
+            sender.sendMessage(plugin.getConfig().getString("usage-reduce-money"));
             return false;
         }
 
@@ -34,38 +33,36 @@ public class ReduceMoneyCommand extends Command {
         try {
             amount = Double.parseDouble(amountStr);
         } catch (NumberFormatException e) {
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cInvalid amount: " + amountStr);
+            sender.sendMessage(plugin.getConfig().getString("error-invalid-amount"));
             return false;
         }
 
         if (amount < 0) {
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cAmount must be ≥ 0.");
+            sender.sendMessage(plugin.getConfig().getString("error-invalid-amount"));
             return false;
         }
 
-        DatabaseHandler database = plugin.getDatabase();
-
         try {
-            String uuid = database.getUUIDByUsername(targetName);
-            if (uuid == null || !database.hasAccount(uuid)) {
+            String uuid = EconomyAPI.getAPI().getUUIDByUsername(targetName);
+            if (uuid == null || !EconomyAPI.getAPI().hasAccount(uuid)) {
                 String playerNotFound = plugin.getConfig().getString("player-not-found");
                 if (playerNotFound == null || playerNotFound.isEmpty()) {
-                    sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cA Configuration issue was detected! Please report to a server admin.");
+                    sender.sendMessage(plugin.getConfig().getString("error-config"));
                 } else {
                     sender.sendMessage(playerNotFound.replace("PLAYER", targetName));
                 }
                 return false;
             }
 
-            boolean success = database.subtractBalance(uuid, amount);
+            boolean success = EconomyAPI.getAPI().subtractBalance(uuid, amount);
             if (!success) {
-                sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cPlayer doesn't have enough funds.");
+                sender.sendMessage(plugin.getConfig().getString("error-pay-failure-2"));
                 return false;
             }
 
             String formatTemplate = plugin.getConfig().getString("reduce-money-output");
             if (formatTemplate == null || formatTemplate.isEmpty()) {
-                sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cA Configuration issue was detected! Please report to a server admin.");
+                sender.sendMessage(plugin.getConfig().getString("error-config"));
                 return false;
             }
 
@@ -78,7 +75,7 @@ public class ReduceMoneyCommand extends Command {
 
         } catch (Exception e) {
             e.printStackTrace();
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cAn internal error occurred while trying to reduce the balance.");
+            sender.sendMessage(plugin.getConfig().getString("error-internal"));
             return false;
         }
     }

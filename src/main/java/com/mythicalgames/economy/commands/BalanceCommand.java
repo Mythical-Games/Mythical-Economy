@@ -4,7 +4,6 @@ import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import com.mythicalgames.economy.EconomyAPI;
-import com.mythicalgames.economy.database.DatabaseHandler;
 
 public class BalanceCommand extends Command {
 
@@ -18,11 +17,10 @@ public class BalanceCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        DatabaseHandler database = plugin.getDatabase();
 
         // Check if sender is a player
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§cOnly players can use this command.");
+            sender.sendMessage(plugin.getConfig().getString("error-player-only"));
             return true;
         }
 
@@ -32,11 +30,11 @@ public class BalanceCommand extends Command {
             if (args.length == 0) {
                 // Self balance
                 String uuid = playerSender.getUniqueId().toString();
-                double balance = database.getBalance(uuid);
+                double balance = EconomyAPI.getAPI().getBalance(uuid);
 
                 String formatTemplate = plugin.getConfig().getString("self-balance-output");
                 if (formatTemplate == null || formatTemplate.isEmpty()) {
-                    sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cA Configuration issue was detected! Please report to a server admin.");
+                    sender.sendMessage(plugin.getConfig().getString("error-config"));
                     return true;
                 }
 
@@ -47,24 +45,23 @@ public class BalanceCommand extends Command {
             } else {
                 // Other player balance
                 String targetName = args[0];
-                String targetUUID = database.getUUIDByUsername(targetName);
+                String targetUUID = EconomyAPI.getAPI().getUUIDByUsername(targetName);
 
-                if (targetUUID == null || !database.hasAccount(targetUUID)) {
+                if (targetUUID == null || !EconomyAPI.getAPI().hasAccount(targetUUID)) {
                     String notFound = plugin.getConfig().getString("player-not-found");
                     if (notFound == null || notFound.isEmpty()) {
-                        sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cA Configuration issue was detected! Please report to a server admin.");
+                        sender.sendMessage(plugin.getConfig().getString("error-config"));
                     } else {
                         sender.sendMessage(notFound);
                     }
                     return true;
                 }
 
-                double balance = database.getBalance(targetUUID);
+                double balance = EconomyAPI.getAPI().getBalance(targetUUID);
 
                 String formatTemplate = plugin.getConfig().getString("player-balance-output");
                 if (formatTemplate == null || formatTemplate.isEmpty()) {
-                    sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cA Configuration issue was detected! Please report to a server admin.");
-                    return true;
+                    sender.sendMessage(plugin.getConfig().getString("error-config"));
                 }
 
                 String message = formatTemplate
@@ -77,7 +74,7 @@ public class BalanceCommand extends Command {
 
         } catch (Exception e) {
             e.printStackTrace();
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cAn internal error occurred while trying to retrieve the balance.");
+            sender.sendMessage(plugin.getConfig().getString("error-internal"));
             return true;
         }
     }

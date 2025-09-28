@@ -3,7 +3,6 @@ package com.mythicalgames.economy.commands;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import com.mythicalgames.economy.EconomyAPI;
-import com.mythicalgames.economy.database.DatabaseHandler;
 
 public class SetMoneyCommand extends Command {
 
@@ -18,12 +17,12 @@ public class SetMoneyCommand extends Command {
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!sender.isPlayer() && !sender.isOp()) {
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cThis command can only be run by a player or OP.");
+            sender.sendMessage(plugin.getConfig().getString("error-player-only"));
             return false;
         }
 
         if (args.length < 2) {
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cUsage: /setmoney <player> <amount>");
+            sender.sendMessage(plugin.getConfig().getString("usage-set-money"));
             return false;
         }
 
@@ -34,34 +33,32 @@ public class SetMoneyCommand extends Command {
         try {
             amount = Double.parseDouble(amountStr);
         } catch (NumberFormatException e) {
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cInvalid amount: " + amountStr);
+            sender.sendMessage(plugin.getConfig().getString("error-invalid-amount"));
             return false;
         }
 
         if (amount < 0) {
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cMoney must be greater than or equal to 0.");
+            sender.sendMessage(plugin.getConfig().getString("error-invalid-amount"));
             return false;
         }
 
-        DatabaseHandler database = plugin.getDatabase();
-
         try {
-            String uuid = database.getUUIDByUsername(targetName);
-            if (uuid == null || !database.hasAccount(uuid)) {
+            String uuid = EconomyAPI.getAPI().getUUIDByUsername(targetName);
+            if (uuid == null || !EconomyAPI.getAPI().hasAccount(uuid)) {
                 String notFoundMessage = plugin.getConfig().getString("player-not-found");
                 if (notFoundMessage == null || notFoundMessage.isEmpty()) {
-                    sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cA Configuration issue was detected! Please report to a server admin.");
+                    sender.sendMessage(plugin.getConfig().getString("error-config"));
                 } else {
                     sender.sendMessage(notFoundMessage.replace("PLAYER", targetName));
                 }
                 return false;
             }
 
-            database.setBalance(uuid, amount);
+            EconomyAPI.getAPI().setBalance(uuid, amount);
             
             String formatTemplate = plugin.getConfig().getString("set-money-output");
             if (formatTemplate == null || formatTemplate.isEmpty()) {
-                sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cA Configuration issue was detected! Please report to a server admin.");
+                sender.sendMessage(plugin.getConfig().getString("error-config"));
                 return false;
             }
 
@@ -74,7 +71,7 @@ public class SetMoneyCommand extends Command {
 
         } catch (Exception e) {
             e.printStackTrace();
-            sender.sendMessage("§l§7[§bEconomyAPI§7] §r§cAn internal error occurred while updating the balance.");
+            sender.sendMessage(plugin.getConfig().getString("error-internal"));
             return false;
         }
     }
