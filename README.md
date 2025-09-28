@@ -49,6 +49,12 @@ Unlike many economy plugins that rely on player usernames, Mythical-Economy stor
 ## API Highlights
 
 ```yaml
+You can access the API through:
+
+EconomyAPI.getAPI().FUNC(..)
+
+Following functions are publicly accessible:
+
 public double getBalance(String playerUUID) {}
 public void addBalance(String playerUUID, double amount) {}
 public boolean subtractBalance(String playerUUID, double amount) {}
