@@ -1,2 +1,2 @@
-rootProject.name = "ExamplePlugin-Gradle"
+rootProject.name = "Mythical-Economy"
 

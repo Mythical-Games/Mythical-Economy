@@ -1,0 +1,27 @@
+############################################################
+# Thank you for using Mythical-Economy - Version 1.0.0-SNAPSHOT
+# We will soon adapt all our plugins with this
+# Hope to see you soon
+############################################################
+
+# Database-Type - Choose your provider for the database that you want to use!
+# Its either (SQLITE) or (MONGODB)
+database-type: SQLITE
+
+# MongoDB credentials - In case you are using Mongo like me!
+mongo-uri: ""
+mongo-database-name: "economy"
+
+# Default Economy Settings - Change as per your liking
+default-balance: 1000
+
+# Translations - Customize all the messages to your liking
+# PLAYER - Displays the player name (PLACEHOLDER)
+# BALANCE - Displays the player balance (PLACEHOLDER)
+new-player-notify: "§l§7[§bEconomyAPI§7] §rWelcome to the server §ePLAYER! You have been granted §eBALANCE$§r as a starting bonus!"
+self-balance-output: "§l§7[§bEconomyAPI§7] §rYou have §eBALANCE$§r available!"
+player-not-found: "§l§7[§bEconomyAPI§7] §r§cMentioned player not found!"
+player-balance-output: "§l§7[§bEconomyAPI§7] §r§ePLAYER§r have §eBALANCE$§r available!"
+add-money-output: "§l§7[§bEconomyAPI§7] Successfully added §eAMOUNT$§r to §r§ePLAYER's§r balance!"
+reduce-money-output: "§l§7[§bEconomyAPI§7] Successfully removed §eAMOUNT$§r from §r§ePLAYER's§r balance!"
+set-money-output: "§l§7[§bEconomyAPI§7] §r§ePLAYER's§r balance has been updated to §eBALANCE!"

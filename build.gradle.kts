@@ -13,16 +13,15 @@ repositories {
     maven("https://repo.opencollab.dev/maven-snapshots/")
 }
 
-group = "cn.powernukkitx"
+group = "com.mythicalgames.economy"
 version = "1.0.0-SNAPSHOT"
-description = "powernukkitx example plugin"
+description = "An economy plugin with an extensive API to integrate with other plugins supporting both sqlite and mongodb! For powernukkitx"
 java.sourceCompatibility = JavaVersion.VERSION_21
 
 dependencies {
-    //Check it out https://jitpack.io/#PowerNukkitX/PowerNukkitX
     compileOnly("com.github.PowerNukkitX:PowerNukkitX:master-SNAPSHOT")
-    //local dependency
-    //compileOnly(files("D:\\IdeaProjects\\PowerNukkitX\\build\\powernukkitx-2.0.0-SNAPSHOT-all.jar"))
+    implementation("org.mongodb:mongodb-driver-sync:4.7.1")
+    implementation("org.xerial:sqlite-jdbc:3.45.1.0") 
 }
 
 //Automatically download dependencies source code
