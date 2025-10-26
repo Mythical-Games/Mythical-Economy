@@ -1,6 +1,6 @@
 {
-  "entrance": "org.allaymc.javaplugintemplate.JavaPluginTemplate",
-  "name": "JavaPluginTemplate",
-  "authors": ["YourNameHere"],
-  "version": "0.1.0"
+  "entrance": "com.mythicalgames.economy.MythicalEconomy",
+  "name": "Mythical-Economy",
+  "authors": ["ACKTAR"],
+  "version": "1.0.0"
 }

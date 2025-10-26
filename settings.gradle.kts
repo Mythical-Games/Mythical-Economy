@@ -1,2 +1,2 @@
-rootProject.name = "JavaPluginTemplate"
+rootProject.name = "Mythical-Economy"
 
