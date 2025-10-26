@@ -15,9 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 import eu.okaeri.configs.ConfigManager;
 import eu.okaeri.configs.yaml.snakeyaml.YamlSnakeYamlConfigurer;
 
+import java.util.UUID;
+
 import org.allaymc.api.plugin.Plugin;
 import org.allaymc.api.registry.Registries;
 import org.allaymc.api.server.Server;
+import org.allaymc.papi.PlaceholderAPI;
+import org.allaymc.papi.PlaceholderProcessor;
 
 @Slf4j
 public class MythicalEconomy extends Plugin {
@@ -46,8 +50,19 @@ public class MythicalEconomy extends Plugin {
             EconomyAPIManager.initialize(database);
             log.info("Mythical-Economy successfully initialized with provider: {}", database.getClass().getSimpleName());
             registerCommandsAndEvents();
-            
-            log.info("Default Balance: {}", config.default_balance);
+
+            // https://github.com/AllayMC/PlaceholderAPI
+            PlaceholderProcessor processor = (player, input) -> {
+                 long puid = player.getUniqueId();
+                 UUID playerUUID = new UUID(0L, puid);
+                 double balance = getAPI().getBalance(playerUUID).join();
+
+                 return String.format("%.0f", balance);
+            };
+
+            boolean success = PlaceholderAPI.getAPI().registerPlaceholder(instance, "balance", processor);
+
+            if (success) log.info("Mythical-Economy placeholders registered successfully!");
             log.info("Mythical-Economy has been enabled!");
         } catch (Exception e) {
             log.error("Failed to enable Mythical-Economy: ", e);
@@ -92,5 +107,4 @@ public class MythicalEconomy extends Plugin {
     public static EconomyAPIManager getAPI() {
         return EconomyAPIManager.getAPI();
     }
-
 }
