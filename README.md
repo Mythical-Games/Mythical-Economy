@@ -1,59 +1,25 @@
-# Allay Java Plugin Template
+# 💸 Mythical-Economy
 
-Welcome to the java plugin template for allay.
+A simple economy plugin for **AllayMC** servers, designed for stability and performance. Mythical Economy offers seamless integration with other plugins and provides robust support for multiple database types.
 
-## Prerequisites
+![Mythical-Economy](https://github.com/Mythical-Games/Mythical-Economy/blob/master/Screenshot_20251026_174036_com.mojang.minecraftpe.jpg)
+---
 
-- Java21 or higher.
-- Allay installed.
+## ✨ Features
 
-## Getting Started
+* **Database Flexibility:** Choose between **SQLite** (local, file-based) for simplicity or **MongoDB** (remote) for high-performance, scalable environments.
+* **Global PAPI Placeholder:** Easily display player balances anywhere with the **PlaceholderAPI** (PAPI) placeholder:
+    * `{balance}` - Shows the player's current money balance.
+* **Standard Economy Commands:** Includes all the essential commands you need to manage your server's currency.
+* **API-Ready:** Built with developers in mind, offering a straightforward API for other plugins to interact with player balances.
 
-1. **Clone this Repository**
+---
 
-```bash
-git clone https://github.com/AllayMC/JavaPluginTemplate.git
-```
-   
-2. **Navigate to the Cloned Directory**
+## ⚙️ Installation
 
-```bash
-cd JavaPluginTemplate
-```
-   
-3. **Change Plugin Information**
+1.  Place the `MythicalEconomy-X.X.X.jar` file into your server's `plugins/` directory.
+2.  (Optional but Recommended) Install **PlaceholderAPI** if you wish to use the global balance placeholder.
+3.  Start or restart your server.
+4.  Configure your database settings in the generated `config.yml` file.
 
-- Rename package name from `org.allaymc.javaplugintemplate` to `your.group.name.and.pluginname`
-- Edit [build.gradle.kts](build.gradle.kts) and [settings.gradle.kts](settings.gradle.kts)
-- Update API version in [build.gradle.kts](build.gradle.kts) to the latest version (see TODO).
-  You can find the latest version here: https://central.sonatype.com/artifact/org.allaymc.allay/api
-- Edit [plugin.json](src/main/resources/plugin.json)
-- Reload gradle
-   
-4. **Build and Run Your Plugin**
-
-```bash
-gradlew shadowJar
-```
-   
-This command will produce a `.jar` file in the `build/libs` directory. 
-Copy the `.jar` file to the `plugins` directory of your allay server.
-Start the allay server and check the logs to ensure your plugin loads and operates
-as expected.
-
-5. **Test Your Plugin in Gradle**
-
-```bash
-gradlew runServer
-```
-
-This command will start an allay server with your plugin loaded.
-Then close allay server by clicking `X` in the dashboard window.
-
-## Documentation
-
-For a deeper dive into the Allay API and its functionalities, please refer to our [documentation](https://docs.allaymc.org) (WIP).
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+---
