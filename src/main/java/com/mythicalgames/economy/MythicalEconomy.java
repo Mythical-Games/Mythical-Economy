@@ -68,6 +68,13 @@ public class MythicalEconomy extends Plugin {
         }
     }
 
+    @Override
+    public void onDisable() {
+        if (database != null) {
+            database.close();
+        }
+    }
+
     private void initializeDatabase() {
         switch (config.database_type) {
             case SQLITE:
