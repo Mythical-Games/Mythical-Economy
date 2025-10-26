@@ -1,6 +1,6 @@
 # 💸 Mythical-Economy
 
-A powerful and flexible economy plugin for **AllayMC** servers, designed for stability and performance. Mythical Economy offers seamless integration with other plugins and provides robust support for multiple database types.
+A simple economy plugin for **AllayMC** servers, designed for stability and performance. Mythical Economy offers seamless integration with other plugins and provides robust support for multiple database types.
 
 ![Mythical-Economy](https://github.com/Mythical-Games/Mythical-Economy/blob/master/Screenshot_20251026_174036_com.mojang.minecraftpe.jpg)
 ---
