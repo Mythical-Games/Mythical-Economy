@@ -28,41 +28,34 @@ public class PayCommand extends Command {
             .playerTarget("player")
             .doubleNum("amount")
             .exec(context -> {
-                EntityPlayer sender = context.getSender().asPlayer();
+                    EntityPlayer sender = context.getSender().asPlayer();
 
-                if (sender == null) {
-                    context.getSender().sendMessage(config.error_player_only);
-                    return context.fail();
-                }
-
-                List<EntityPlayer> targets = context.getResult(0);
-                if (targets.isEmpty()) {
-                    sender.sendMessage(config.player_not_found.replace("PLAYER", "unknown"));
-                    return context.fail();
-                }
-
-                EntityPlayer target = targets.get(0);
-                String targetName = target.getOriginName();
-
-                double amount = context.getResult(1);
-                if (amount <= 0) {
-                    sender.sendMessage(config.error_invalid_amount);
-                    return context.fail();
-                }
-
-                UUID senderUUID = new UUID(0L, sender.getUniqueId());
-
-                MythicalEconomy.getAPI().getUUIDByUsername(targetName).thenAccept(targetUUIDStr -> {
-                    if (targetUUIDStr == null) {
-                        sender.sendMessage(config.player_not_found.replace("PLAYER", targetName));
-                        return;
+                    if (sender == null) {
+                        context.getSender().sendMessage(config.error_player_only);
+                        return context.fail();
                     }
 
-                    UUID targetUUID = UUID.fromString(targetUUIDStr);
+                    List<EntityPlayer> targets = context.getResult(0);
+                    if (targets.isEmpty()) {
+                        sender.sendMessage(config.player_not_found.replace("PLAYER", "unknown"));
+                        return context.fail();
+                    }
+
+                    EntityPlayer target = targets.get(0);
+                    String targetName = target.getOriginName();
+
+                    double amount = context.getResult(1);
+                    if (amount <= 0) {
+                        sender.sendMessage(config.error_invalid_amount);
+                        return context.fail();
+                    }
+
+                    UUID senderUUID = sender.getLoginData().getUuid();
+                    UUID targetUUID = target.getLoginData().getUuid();
 
                     if (senderUUID.equals(targetUUID)) {
                         sender.sendMessage(config.error_pay_failure_1);
-                        return;
+                        return context.fail();
                     }
 
                     MythicalEconomy.getAPI().hasAccount(targetUUID).thenAccept(hasAccount -> {
@@ -104,11 +97,6 @@ public class PayCommand extends Command {
                         sender.sendMessage(config.error_internal);
                         return null;
                     });
-                }).exceptionally(ex -> {
-                    ex.printStackTrace();
-                    sender.sendMessage(config.error_internal);
-                    return null;
-                });
 
                 return context.success();
             });

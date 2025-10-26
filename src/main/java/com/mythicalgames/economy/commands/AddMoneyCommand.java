@@ -49,54 +49,37 @@ public class AddMoneyCommand extends Command {
                     return context.fail();
                 }
 
-                MythicalEconomy.getAPI().getUUIDByUsername(targetName)
-                    .thenAccept(targetUUIDStr -> {
-                        if (targetUUIDStr == null) {
+                UUID targetUUID = target.getLoginData().getUuid();
+
+                MythicalEconomy.getAPI().hasAccount(targetUUID)
+                    .thenAccept(hasAccount -> {
+                        if (!hasAccount) {
                             if (sender != null)
                                 sender.sendMessage(plugin.config.player_not_found.replace("PLAYER", targetName));
-                            context.fail();
-                            return;
-                        }
-
-                        UUID targetUUID = UUID.fromString(targetUUIDStr);
-
-                        MythicalEconomy.getAPI().hasAccount(targetUUID)
-                            .thenAccept(hasAccount -> {
-                                if (!hasAccount) {
-                                    if (sender != null)
-                                        sender.sendMessage(plugin.config.player_not_found.replace("PLAYER", targetName));
-                                    context.fail();
-                                    return;
-                                }
-
-                                MythicalEconomy.getAPI().addBalance(targetUUID, amount)
-                                    .thenAccept(v -> {
-                                        String formatted = plugin.config.add_money_output
-                                                .replace("PLAYER", targetName)
-                                                .replace("AMOUNT", String.format("%.2f", amount));
-                                        if (sender != null) sender.sendMessage(formatted);
-                                        context.success();
-                                    })
-                                    .exceptionally(ex -> {
-                                        ex.printStackTrace();
-                                        if (sender != null) sender.sendMessage(plugin.config.error_internal);
-                                        context.fail();
-                                        return null;
-                                    });
-
-                            }).exceptionally(ex -> {
-                                ex.printStackTrace();
-                                if (sender != null) sender.sendMessage(plugin.config.error_internal);
                                 context.fail();
-                                return null;
-                            });
+                                return;
+                            }
+
+                MythicalEconomy.getAPI().addBalance(targetUUID, amount)
+                    .thenAccept(v -> {
+                        String formatted = plugin.config.add_money_output
+                            .replace("PLAYER", targetName)
+                            .replace("AMOUNT", String.format("%.2f", amount));
+                        if (sender != null) sender.sendMessage(formatted);
+                            context.success();
+                    }).exceptionally(ex -> {
+                        ex.printStackTrace();
+                        if (sender != null) sender.sendMessage(plugin.config.error_internal);
+                            context.fail();
+                            return null;
+                        });
 
                     }).exceptionally(ex -> {
                         ex.printStackTrace();
                         if (sender != null) sender.sendMessage(plugin.config.error_internal);
-                        context.fail();
-                        return null;
-                    });
+                            context.fail();
+                            return null;
+                        });
 
                 return context.success();
             });

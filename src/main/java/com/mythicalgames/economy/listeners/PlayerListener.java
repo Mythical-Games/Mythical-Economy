@@ -14,8 +14,7 @@ public class PlayerListener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         EntityPlayer player = event.getPlayer();
         String playerUsername = player.getOriginName();
-        long id = player.getUniqueId();
-        UUID playerUUID = new UUID(0, id);
+        UUID playerUUID = player.getLoginData().getUuid();
 
         MythicalEconomy.getAPI().hasAccount(playerUUID).thenAccept(hasAccount -> {
             if (!hasAccount) {

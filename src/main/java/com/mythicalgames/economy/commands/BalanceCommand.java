@@ -27,7 +27,7 @@ public class BalanceCommand extends Command {
                     return context.fail();
                 }
 
-                UUID senderUUID = new UUID(0L, sender.getUniqueId());
+                UUID senderUUID = sender.getLoginData().getUuid();
 
                 MythicalEconomy.getAPI().getBalance(senderUUID)
                     .thenAccept(balance -> {

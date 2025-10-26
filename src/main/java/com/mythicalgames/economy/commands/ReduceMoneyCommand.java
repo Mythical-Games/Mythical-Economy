@@ -27,35 +27,29 @@ public class ReduceMoneyCommand extends Command {
             .playerTarget("player")
             .doubleNum("amount")
             .exec(context -> {
-                EntityPlayer senderPlayer = context.getSender().asPlayer();
+                    EntityPlayer senderPlayer = context.getSender().asPlayer();
 
-                if (senderPlayer == null && !context.getSender().isOperator()) {
-                    context.getSender().sendMessage(plugin.config.error_player_only);
-                    return context.fail();
-                }
-
-                List<EntityPlayer> targets = context.getResult(0);
-                if (targets.isEmpty()) {
-                    context.getSender().sendMessage(plugin.config.player_not_found.replace("PLAYER", "unknown"));
-                    return context.fail();
-                }
-
-                EntityPlayer target = targets.get(0);
-                String targetName = target.getOriginName();
-                double amount = context.getResult(1);
-
-                if (amount <= 0) {
-                    context.getSender().sendMessage(plugin.config.error_invalid_amount);
-                    return context.fail();
-                }
-
-                MythicalEconomy.getAPI().getUUIDByUsername(targetName).thenAccept(targetUUIDStr -> {
-                    if (targetUUIDStr == null) {
-                        context.getSender().sendMessage(plugin.config.player_not_found.replace("PLAYER", targetName));
-                        return;
+                    if (senderPlayer == null && !context.getSender().isOperator()) {
+                        context.getSender().sendMessage(plugin.config.error_player_only);
+                        return context.fail();
                     }
 
-                    UUID targetUUID = UUID.fromString(targetUUIDStr);
+                    List<EntityPlayer> targets = context.getResult(0);
+                    if (targets.isEmpty()) {
+                        context.getSender().sendMessage(plugin.config.player_not_found.replace("PLAYER", "unknown"));
+                        return context.fail();
+                    }
+
+                    EntityPlayer target = targets.get(0);
+                    String targetName = target.getOriginName();
+                    double amount = context.getResult(1);
+
+                    if (amount <= 0) {
+                        context.getSender().sendMessage(plugin.config.error_invalid_amount);
+                        return context.fail();
+                    }
+
+                    UUID targetUUID = target.getLoginData().getUuid();
 
                     MythicalEconomy.getAPI().hasAccount(targetUUID).thenAccept(hasAccount -> {
                         if (!hasAccount) {
@@ -86,14 +80,8 @@ public class ReduceMoneyCommand extends Command {
                         return null;
                     });
 
-                }).exceptionally(ex -> {
-                    ex.printStackTrace();
-                    context.getSender().sendMessage(plugin.config.error_internal);
-                    return null;
+                    return context.success();
                 });
-                
-                return context.success();
-            });
     }
 }
 
