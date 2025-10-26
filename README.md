@@ -2,6 +2,7 @@
 
 A powerful and flexible economy plugin for **AllayMC** servers, designed for stability and performance. Mythical Economy offers seamless integration with other plugins and provides robust support for multiple database types.
 
+![Mythical-Economy](https://github.com/Mythical-Games/Mythical-Economy/blob/master/Screenshot_20251026_174036_com.mojang.minecraftpe.jpg)
 ---
 
 ## ✨ Features
@@ -22,7 +23,3 @@ A powerful and flexible economy plugin for **AllayMC** servers, designed for sta
 4.  Configure your database settings in the generated `config.yml` file.
 
 ---
-
-storage-type: SQLITE
-sqlite:
-  file: economy.db # The name of the database file in the plugins/MythicalEconomy folder
