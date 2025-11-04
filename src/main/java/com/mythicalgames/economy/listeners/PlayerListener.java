@@ -38,10 +38,12 @@ public class PlayerListener {
                 MythicalEconomy.getAPI().createAccount(playerUUID, playerUsername, defaultMoney)
                         .thenAccept(created -> {
                             if (created) {
+                                if (MythicalEconomy.getInstance().config.enable_first_join_message) {
                                 String message = formatTemplate
                                         .replace("PLAYER", playerUsername)
                                         .replace("BALANCE", String.valueOf(defaultMoney));
                                 player.sendMessage(message);
+                                }
                             } else {
                                 MythicalEconomy.getInstance().getPluginLogger().error(
                                         "Failed to create account for player " + playerUsername + " (" + playerUUID + ")");
