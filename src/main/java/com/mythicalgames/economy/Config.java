@@ -40,6 +40,8 @@ public class Config extends OkaeriConfig {
     // ========================
     @Comment("Default Economy Settings - Change as per your liking")
     public double default_balance = 1000;
+    @Comment(" ")
+    public boolean enable_first_join_message = true;
 
     @Comment(" ")
     @Comment(" ")
