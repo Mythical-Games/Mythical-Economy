@@ -3,7 +3,6 @@ package com.mythicalgames.economy.commands;
 import org.allaymc.api.command.Command;
 import org.allaymc.api.command.tree.CommandTree;
 import org.allaymc.api.entity.interfaces.EntityPlayer;
-import org.allaymc.api.permission.Permission;
 
 import com.mythicalgames.economy.MythicalEconomy;
 
@@ -15,10 +14,9 @@ public class ReduceMoneyCommand extends Command {
     private final MythicalEconomy plugin;
 
     public ReduceMoneyCommand(MythicalEconomy plugin) {
-        super("reducemoney", "Reduces money from a player's balance");
+        super("reducemoney", "Reduces money from a player's balance", "mythical.economy.reduce");
         this.aliases.add("rm");
         this.plugin = plugin;
-        getPermissions().add(Permission.create("mythical.economy.remove"));
     }
 
     @Override
