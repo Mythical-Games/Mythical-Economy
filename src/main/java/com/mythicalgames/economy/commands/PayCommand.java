@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.allaymc.api.command.Command;
 import org.allaymc.api.command.tree.CommandTree;
 import org.allaymc.api.entity.interfaces.EntityPlayer;
-import org.allaymc.api.permission.PermissionGroups;
+import org.allaymc.api.permission.OpPermissionCalculator;
 import org.allaymc.api.server.Server;
 
 import com.mythicalgames.economy.MythicalEconomy;
@@ -17,8 +17,8 @@ public class PayCommand extends Command {
     private final Config config;
 
     public PayCommand(MythicalEconomy plugin) {
-        super("pay", "Send money to another player");
-        getPermissions().forEach(PermissionGroups.MEMBER::addPermission);
+        super("pay", "Send money to another player", "mythical.economy.pay");
+        OpPermissionCalculator.NON_OP_PERMISSIONS.addAll(this.permissions)
         this.config = plugin.config;
     }
 
