@@ -18,7 +18,7 @@ public class PayCommand extends Command {
 
     public PayCommand(MythicalEconomy plugin) {
         super("pay", "Send money to another player", "mythical.economy.pay");
-        OpPermissionCalculator.NON_OP_PERMISSIONS.addAll(this.permissions)
+        OpPermissionCalculator.NON_OP_PERMISSIONS.addAll(this.permissions);
         this.config = plugin.config;
     }
 
