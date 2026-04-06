@@ -3,7 +3,7 @@ package com.mythicalgames.economy.commands;
 import org.allaymc.api.command.Command;
 import org.allaymc.api.command.tree.CommandTree;
 import org.allaymc.api.entity.interfaces.EntityPlayer;
-import org.allaymc.api.permission.Permission;
+import org.allaymc.api.permission.OpPermissionCalculator;
 
 import com.mythicalgames.economy.MythicalEconomy;
 
@@ -15,10 +15,10 @@ public class AddMoneyCommand extends Command {
     private final MythicalEconomy plugin;
 
     public AddMoneyCommand(MythicalEconomy plugin) {
-        super("addmoney", "Add money to a player's balance");
+        super("addmoney", "Add money to a player's balance", "mythical.economy.add");
         this.plugin = plugin;
         this.aliases.add("am");
-        getPermissions().add(Permission.create("mythical.economy.add"));
+        OpPermissionCalculator.NON_OP_PERMISSIONS.addAll(this.permissions);
     }
 
     @Override
