@@ -1,8 +1,8 @@
 package com.mythicalgames.economy.listeners;
 
 import org.allaymc.api.eventbus.EventHandler;
-import org.allaymc.api.eventbus.event.player.PlayerJoinEvent;
-import org.allaymc.api.entity.interfaces.EntityPlayer;
+import org.allaymc.api.eventbus.event.server.PlayerJoinEvent;
+import org.allaymc.api.player.Player;
 
 import com.mythicalgames.economy.MythicalEconomy;
 
@@ -12,7 +12,7 @@ public class PlayerListener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        EntityPlayer player = event.getPlayer();
+        Player player = event.getPlayer();
         String playerUsername = player.getOriginName();
         UUID playerUUID = player.getLoginData().getUuid();
 
