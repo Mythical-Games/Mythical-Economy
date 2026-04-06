@@ -3,7 +3,7 @@ package com.mythicalgames.economy.commands;
 import org.allaymc.api.command.Command;
 import org.allaymc.api.command.tree.CommandTree;
 import org.allaymc.api.entity.interfaces.EntityPlayer;
-import org.allaymc.api.permission.PermissionGroups;
+import org.allaymc.api.permission.OpPermissionCalculator;
 
 import com.mythicalgames.economy.MythicalEconomy;
 
@@ -12,9 +12,9 @@ import java.util.UUID;
 public class BalanceCommand extends Command {
 
     public BalanceCommand() {
-        super("balance", "Display your balance");
+        super("balance", "Display your balance", "mythical.economy.bal");
         this.aliases.add("bal");
-        getPermissions().forEach(PermissionGroups.MEMBER::addPermission);
+        OpPermissionCalculator.NON_OP_PERMISSIONS.addAll(this.permissions);
     }
 
     @Override
