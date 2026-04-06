@@ -2,7 +2,7 @@
   "entrance": "com.mythicalgames.economy.MythicalEconomy",
   "name": "Mythical-Economy",
   "authors": ["ACKTAR"],
-  "version": "1.1.0",
-  "api_version": ">=0.12.0",
+  "version": "1.2.0",
+  "api_version": ">=0.27.0",
   "description": "A simple economy plugin for AllayMC!"
 }
