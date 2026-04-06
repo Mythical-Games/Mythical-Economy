@@ -3,7 +3,6 @@ package com.mythicalgames.economy.commands;
 import org.allaymc.api.command.Command;
 import org.allaymc.api.command.tree.CommandTree;
 import org.allaymc.api.entity.interfaces.EntityPlayer;
-import org.allaymc.api.permission.Permission;
 
 import com.mythicalgames.economy.MythicalEconomy;
 
@@ -15,10 +14,9 @@ public class SetMoneyCommand extends Command {
     private final MythicalEconomy plugin;
 
     public SetMoneyCommand(MythicalEconomy plugin) {
-        super("setmoney", "Set a player's balance");
+        super("setmoney", "Set a player's balance", "mythical.economy.set");
         this.plugin = plugin;
         this.aliases.add("sm");
-        getPermissions().add(Permission.create("mythical.economy.set"));
     }
 
     @Override
