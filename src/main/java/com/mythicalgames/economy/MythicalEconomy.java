@@ -53,7 +53,7 @@ public class MythicalEconomy extends Plugin {
 
             // https://github.com/AllayMC/PlaceholderAPI
             PlaceholderProcessor processor = (player, input) -> {
-                 UUID playerUUID = player.getLoginData().getUuid();
+                 UUID playerUUID = player.getController().getLoginData().getUuid();
                  double balance = getAPI().getBalance(playerUUID).join();
 
                  return String.format("%.0f", balance);

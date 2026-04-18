@@ -27,7 +27,7 @@ public class ReduceMoneyCommand extends Command {
             .exec(context -> {
                     EntityPlayer senderPlayer = context.getSender().asPlayer();
 
-                    if (senderPlayer == null && !context.getSender().isOperator()) {
+                    if (senderPlayer == null) {
                         context.getSender().sendMessage(plugin.config.error_player_only);
                         return context.fail();
                     }
@@ -39,7 +39,7 @@ public class ReduceMoneyCommand extends Command {
                     }
 
                     EntityPlayer target = targets.get(0);
-                    String targetName = target.getOriginName();
+                    String targetName = target.getController().getOriginName();
                     double amount = context.getResult(1);
 
                     if (amount <= 0) {
@@ -47,7 +47,7 @@ public class ReduceMoneyCommand extends Command {
                         return context.fail();
                     }
 
-                    UUID targetUUID = target.getLoginData().getUuid();
+                    UUID targetUUID = target.getController().getLoginData().getUuid();
 
                     MythicalEconomy.getAPI().hasAccount(targetUUID).thenAccept(hasAccount -> {
                         if (!hasAccount) {

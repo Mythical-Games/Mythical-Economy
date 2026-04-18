@@ -27,7 +27,7 @@ public class BalanceCommand extends Command {
                     return context.fail();
                 }
 
-                UUID senderUUID = sender.getLoginData().getUuid();
+                UUID senderUUID = sender.getController().getLoginData().getUuid();
 
                 MythicalEconomy.getAPI().getBalance(senderUUID)
                     .thenAccept(balance -> {
@@ -40,7 +40,7 @@ public class BalanceCommand extends Command {
                     }).exceptionally(ex -> {
                         sender.sendMessage(MythicalEconomy.getInstance().config.error_internal);
                         MythicalEconomy.getInstance().getPluginLogger().error(
-                                "Error fetching balance for " + sender.getOriginName() + ": " + ex.getMessage());
+                                "Error fetching balance for " + sender.getController().getOriginName() + ": " + ex.getMessage());
                         return null;
                     });
 

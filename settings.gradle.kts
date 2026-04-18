@@ -1,2 +1,2 @@
-rootProject.name = "Mythical-Economy"
+rootProject.name = "BetterEconomy"
 

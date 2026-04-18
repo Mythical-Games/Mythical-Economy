@@ -7,6 +7,7 @@ import org.allaymc.api.command.Command;
 import org.allaymc.api.command.tree.CommandTree;
 import org.allaymc.api.entity.interfaces.EntityPlayer;
 import org.allaymc.api.permission.OpPermissionCalculator;
+import org.allaymc.api.player.Player;
 import org.allaymc.api.server.Server;
 
 import com.mythicalgames.economy.MythicalEconomy;
@@ -42,7 +43,7 @@ public class PayCommand extends Command {
                     }
 
                     EntityPlayer target = targets.get(0);
-                    String targetName = target.getOriginName();
+                    String targetName = target.getController().getOriginName();
 
                     double amount = context.getResult(1);
                     if (amount <= 0) {
@@ -50,8 +51,8 @@ public class PayCommand extends Command {
                         return context.fail();
                     }
 
-                    UUID senderUUID = sender.getLoginData().getUuid();
-                    UUID targetUUID = target.getLoginData().getUuid();
+                    UUID senderUUID = sender.getController().getLoginData().getUuid();
+                    UUID targetUUID = target.getController().getLoginData().getUuid();
 
                     if (senderUUID.equals(targetUUID)) {
                         sender.sendMessage(config.error_pay_failure_1);
@@ -75,11 +76,11 @@ public class PayCommand extends Command {
                                 .thenAccept(v -> {
                                     sender.sendMessage("§l§7[§dMythical-Economy§7] §r§fYou sent §e" + amount + "$ §fto §b" + targetName + "§a.");
 
-                                    EntityPlayer targetPlayer = Server.getInstance()
+                                    Player targetPlayer = Server.getInstance()
                                         .getPlayerManager()
-                                        .getOnlinePlayerByName(targetName);
+                                        .getPlayerByName(targetName);
                                     if (targetPlayer != null) {
-                                        targetPlayer.sendMessage("§l§7[§dMythical-Economy§7] §r§fYou received §e" + amount + "$ §ffrom §b" + sender.getOriginName() + "§a.");
+                                        targetPlayer.sendMessage("§l§7[§dMythical-Economy§7] §r§fYou received §e" + amount + "$ §ffrom §b" + sender.getController().getOriginName() + "§a.");
                                     }
                                 })
                                 .exceptionally(ex -> {
